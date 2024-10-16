@@ -20,19 +20,26 @@ def iniciar_jogo(nome_jogador, tamanho_labirinto):
     """Inicia o jogo com um loop principal e controla os movimentos do jogador."""
     
     labirinto, itens = criar_labirinto(tamanho_labirinto, num_itens=3)  # Gerar labirinto e itens
-    pos_jogador, pontos = iniciar_jogador()
+    pos_jogador = (0, 0)  # O jogador sempre começa em 0,0
+    pontos = 0  # Inicializa a pontuação
     movimentos = 0
 
+    # Mostrar labirinto na inicialização
+    imprimir_labirinto(labirinto)
+
     while True:
-        imprimir_labirinto(labirinto)
         print(f"\nJogador: {nome_jogador} | Pontuação: {pontos} | Movimentos restantes: {MAX_MOVIMENTOS - movimentos} | Itens coletados: {3 - len(itens)}")
         
+        # Ler o movimento do jogador
         tecla = input("Movimento (WASD): ").lower()
         nova_posicao = mover(pos_jogador, tecla, labirinto)
 
         if nova_posicao != pos_jogador:  # Verifica se houve movimento
             pos_jogador = mover_jogador(pos_jogador, nova_posicao, labirinto)
             movimentos += 1  # Incrementa o contador de movimentos
+
+        # Mostrar o labirinto atualizado após o movimento
+        imprimir_labirinto(labirinto)
 
         coletado = verificar_item(pos_jogador, itens)
         pontos = pontuar(pontos, coletado)
@@ -45,7 +52,6 @@ def iniciar_jogo(nome_jogador, tamanho_labirinto):
         elif movimentos >= MAX_MOVIMENTOS:
             print(f"\nVocê perdeu, {nome_jogador}. Número máximo de movimentos atingido!")
             break
-
 
 def main():
     parser = argparse.ArgumentParser(description="Aventura no Labirinto")
