@@ -1,6 +1,6 @@
 import random
 
-def criar_labirinto(tamanho=10, num_itens=3):
+def criar_labirinto(tamanho=10, num_itens=3, simbolo_jogador='J'):
     """Gera um labirinto com um caminho garantido do início ao fim e caminhos adicionais."""
     # Inicializar o labirinto com paredes
     labirinto = [['#' for _ in range(tamanho)] for _ in range(tamanho)]
@@ -20,14 +20,12 @@ def criar_labirinto(tamanho=10, num_itens=3):
         x, y = 0, 0
         labirinto[x][y] = ' '  # Ponto inicial
         while (x, y) != (tamanho - 1, tamanho - 1):
-            # Tente mover para baixo ou para a direita para garantir o progresso
             if x < tamanho - 1 and random.choice([True, False]):
                 x += 1
             elif y < tamanho - 1:
                 y += 1
             else:
                 x += 1  # Forçar movimento para baixo quando à direita
-
             labirinto[x][y] = ' '  # Criar o caminho principal
 
     criar_caminho_principal()
@@ -60,22 +58,21 @@ def criar_labirinto(tamanho=10, num_itens=3):
         item_x = random.randint(0, tamanho - 1)
         item_y = random.randint(0, tamanho - 1)
 
-        # Verifica se a posição é válida (não é uma parede, não é a posição do jogador ou saída)
         if labirinto[item_x][item_y] == ' ' and (item_x, item_y) != (0, 0) and (item_x, item_y) != (tamanho - 1, tamanho - 1):
             labirinto[item_x][item_y] = 'I'  # 'I' para representar um item
             itens_posicoes.append((item_x, item_y))
 
-    # Garantir que o jogador esteja na posição inicial
-    labirinto[0][0] = 'J'
+    # Garantir que o jogador esteja na posição inicial com o símbolo escolhido
+    labirinto[0][0] = simbolo_jogador
 
-    return labirinto, itens_posicoes  # Retorna o labirinto e as posições dos itens
+    return labirinto, itens_posicoes
 
 def imprimir_labirinto(labirinto):
     """Imprime o labirinto no terminal."""
     for linha in labirinto:
         print(' '.join(linha))
 
-def mover_jogador(posicao_atual, nova_posicao, labirinto):
+def mover_jogador(posicao_atual, nova_posicao, labirinto, simbolo_jogador):
     """Atualiza o labirinto com o movimento do jogador."""
     x_atual, y_atual = posicao_atual
     x_novo, y_novo = nova_posicao
@@ -83,10 +80,11 @@ def mover_jogador(posicao_atual, nova_posicao, labirinto):
     # Limpar a posição atual do jogador
     labirinto[x_atual][y_atual] = ' '
 
-    # Colocar o jogador na nova posição
-    labirinto[x_novo][y_novo] = 'J'
+    # Colocar o jogador na nova posição com o símbolo correto
+    labirinto[x_novo][y_novo] = simbolo_jogador
 
     return nova_posicao  # Retorna a nova posição do jogador
+
 
 def verificar_item(pos_jogador, itens):
     """Verifica se o jogador está na mesma posição que um item e o coleta."""

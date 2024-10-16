@@ -4,8 +4,6 @@ from aventura_pkg.jogador import iniciar_jogador, mover, pontuar
 from aventura_pkg.utils import imprime_instrucoes, animacao_vitoria
 from time import sleep
 
-MAX_MOVIMENTOS = 50  # Número máximo de movimentos permitidos
-
 def menu():
     """Exibe o menu inicial e retorna a escolha do jogador."""
     print("\nBem-vindo à Aventura no Labirinto!")
@@ -16,13 +14,19 @@ def menu():
     escolha = input("Escolha uma opção (1-3): ")
     return escolha
 
+def calcular_max_movimentos(tamanho_labirinto):
+    """Calcula o número máximo de movimentos baseado no tamanho do labirinto."""
+    return tamanho_labirinto * 5  # Multiplica o tamanho por 5 para ajustar os movimentos
+
 def iniciar_jogo(nome_jogador, tamanho_labirinto):
     """Inicia o jogo com um loop principal e controla os movimentos do jogador."""
     
-    labirinto, itens = criar_labirinto(tamanho_labirinto, num_itens=3)  # Gerar labirinto e itens
+    simbolo_jogador = nome_jogador[0].upper()  # Usa a primeira letra do nome do jogador
+    labirinto, itens = criar_labirinto(tamanho_labirinto, num_itens=3, simbolo_jogador=simbolo_jogador)  # Usar a primeira letra do nome como símbolo
     pos_jogador = (0, 0)  # O jogador sempre começa em 0,0
     pontos = 0  # Inicializa a pontuação
     movimentos = 0
+    MAX_MOVIMENTOS = calcular_max_movimentos(tamanho_labirinto)  # Define o número máximo de movimentos
 
     # Mostrar labirinto na inicialização
     imprimir_labirinto(labirinto)
@@ -35,7 +39,7 @@ def iniciar_jogo(nome_jogador, tamanho_labirinto):
         nova_posicao = mover(pos_jogador, tecla, labirinto)
 
         if nova_posicao != pos_jogador:  # Verifica se houve movimento
-            pos_jogador = mover_jogador(pos_jogador, nova_posicao, labirinto)
+            pos_jogador = mover_jogador(pos_jogador, nova_posicao, labirinto, simbolo_jogador)  # Passa o símbolo do jogador
             movimentos += 1  # Incrementa o contador de movimentos
 
         # Mostrar o labirinto atualizado após o movimento
@@ -52,6 +56,7 @@ def iniciar_jogo(nome_jogador, tamanho_labirinto):
         elif movimentos >= MAX_MOVIMENTOS:
             print(f"\nVocê perdeu, {nome_jogador}. Número máximo de movimentos atingido!")
             break
+
 
 def main():
     parser = argparse.ArgumentParser(description="Aventura no Labirinto")
