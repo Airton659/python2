@@ -1,10 +1,13 @@
 import os
+from flask_login import LoginManager
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
 app.secret_key = 'Bk4$!8B9~{*>'
+login = LoginManager(app)
+app.config['SECRET_KEY'] = "PD12345678"
 
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite+pysqlite:///microblog.db"
 db = SQLAlchemy()

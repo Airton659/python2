@@ -7,12 +7,14 @@ def validate_user_password(username, password):
     '''Testa se o usuário e senha correspondem a um registro no banco'''
     res = db.session.scalars(select(User).where(User.username == username))
     res = res.first()
-    return res and res.password == password
+    if User and User.password == password: return User
+    else: return None
 
 def user_exist(username):
     '''Testa se o usuário informado corresponde a um registro no banco'''
     res = db.session.scalars(select(User).where(User.username == username))
-    return res.first()
+    user = res.first()
+    return user
 
 def create_user(username, password, remember=False,last_login=None):
     '''Cria um novo registro no banco'''
@@ -24,3 +26,4 @@ def create_user(username, password, remember=False,last_login=None):
     )
     db.session.add(new_user)
     db.session.commit()
+    return new_user
