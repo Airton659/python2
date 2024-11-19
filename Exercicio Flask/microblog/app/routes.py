@@ -2,6 +2,7 @@ from datetime import datetime
 from app import alquimias
 from flask import render_template,request, redirect, url_for,flash
 from app import app
+from app.alquimias import create_post,get_timeline
 from flask_login import (
     current_user,
     login_user,
@@ -11,15 +12,22 @@ from flask_login import (
 
 @app.route('/')
 def index():
-    user = None
-    if current_user.is_authenticated:
-        user = current_user
+    user = current_user if current_user.is_authenticated else None
+    posts = get_timeline() if user else []
     return render_template(
         'index.html',
-        title = 'Página Inicial',
-        user = user
-
+        title='Página Inicial',
+        user=user,
+        posts=posts
     )
+    # if current_user.is_authenticated:
+    #     user = current_user
+    # return render_template(
+    #     'index.html',
+    #     title = 'Página Inicial',
+    #     user = user
+
+    # )
 
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -64,3 +72,17 @@ def cadastro():
 def logout():
     logout_user()
     return redirect(url_for(f'index'))
+
+
+@app.route('/post', methods = ['GET', 'POST'])
+@login_required
+def post():
+    if request.method == 'POST':
+        body = request.form['body']
+        if not body.strip():
+            flash('O post não pode estar vazio!')
+            return redirect(url_for('post'))
+        create_post(body, current_user)
+        flash('Post publicado com sucesso!')
+        return redirect(url_for('index'))
+    return render_template('post.html')

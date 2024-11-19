@@ -1,7 +1,7 @@
 from datetime import datetime
 from sqlalchemy import select
 from app import db
-from app.models.models import User
+from app.models.models import User, Post
 
 def validate_user_password(username, password):
     # '''Testa se o usuário e senha correspondem a um registro no banco'''
@@ -29,3 +29,12 @@ def create_user(username, password, profile_picture=None, bio=None, remember=Fal
     db.session.add(new_user)
     db.session.commit()
     return new_user
+
+def create_post(body,user):
+    '''Cria e registra um novo post no banco'''
+    post = Post(body=body, author=user, timestamp=datetime.now())
+    db.session.add(post)
+    db.session.commit()
+
+def get_timeline():
+    return Post.query.order_by(Post.timestamp.desc()).limit(5).all()

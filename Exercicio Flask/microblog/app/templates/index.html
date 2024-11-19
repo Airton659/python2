@@ -8,7 +8,22 @@
     {% if user.bio %}
         <p>{{ user.bio }}</p>
     {% endif %}
+    <a href="{{ url_for('post') }}">Escrever Post</a>
     {% else %}
     <h1>Olá, deseja fazer login?</h1>
     {% endif %}
+    {% if posts %}
+        <h2> Timeline</h2>
+        <ul>
+            {% for post in posts %}
+            <li>
+                <strong> {{ post.author.username }}</strong>: {{ post.body }}
+                <small> {{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}</small>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum post para mostrar</p>
+    {% endif %}
+
 {% endblock %}
