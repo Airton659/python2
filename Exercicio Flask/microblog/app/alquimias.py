@@ -4,10 +4,10 @@ from app import db
 from app.models.models import User
 
 def validate_user_password(username, password):
-    '''Testa se o usuário e senha correspondem a um registro no banco'''
+    # '''Testa se o usuário e senha correspondem a um registro no banco'''
     res = db.session.scalars(select(User).where(User.username == username))
-    res = res.first()
-    if User and User.password == password: return User
+    user = res.first()
+    if user and user.password == password: return user
     else: return None
 
 def user_exist(username):

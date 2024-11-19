@@ -12,12 +12,15 @@ from flask_login import (
 @login_required
 def index():
     user = None
+    # username = request.args.get('username')
+    # if username: user = {'username': username}
     if current_user.is_authenticated:
-        user= current_user
+        user = current_user
     return render_template(
         'index.html',
         title = 'Página Inicial',
         user = user
+
     )
 
 
@@ -30,9 +33,9 @@ def login():
         password = request.form['password'].lower()
 
         user = alquimias.validate_user_password(username,password)
-        if user:        
+        if user:
             flash('Login bem sucedido!')
-            login_user(user, remember=user.remember)
+            login_user(user,remember = user.remember)
             return redirect(url_for(f"index"))
         else:
             flash('Usuário ou senha inválidos')
@@ -49,8 +52,8 @@ def cadastro():
         username = username
         password = request.form['password'].lower()
         remember = True if request.form.get('remember') == 'on' else False
-        user = alquimias.create_user(username,password, remember)
-        login_user(user, remember=remember)
+        user = alquimias.create_user(username, password, remember)
+        login_user(user,remember = remember)
         return redirect(url_for(f'index'))
     
 @app.route('/logout')
