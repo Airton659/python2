@@ -9,8 +9,10 @@ class User(UserMixin,db.Model):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     username: Mapped[str] = mapped_column(unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
+    profile_picture: Mapped[str] = mapped_column(nullable=True)
+    bio: Mapped[str] = mapped_column(nullable=True)
     remember: Mapped[bool] = mapped_column(default=False)
-    last_login: Mapped[datetime] = mapped_column()
+    last_login: Mapped[datetime] = mapped_column(nullable=True) 
 
 @login.user_loader
 def load_user(id):

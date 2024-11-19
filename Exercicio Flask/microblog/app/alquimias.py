@@ -16,11 +16,13 @@ def user_exist(username):
     user = res.first()
     return user
 
-def create_user(username, password, remember=False,last_login=None):
+def create_user(username, password, profile_picture=None, bio=None, remember=False,last_login=None):
     '''Cria um novo registro no banco'''
     new_user = User(
         username = username,
         password = password,
+        profile_picture = profile_picture,
+        bio = bio,
         remember = remember,
         last_login = last_login if last_login else datetime.now()
     )
