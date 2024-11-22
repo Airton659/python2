@@ -1,0 +1,123 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5dc ;
+    color: #2c3e50;
+    margin: 0;
+    padding: 0;
+}
+
+div.header {
+    background-color: #800000;
+    color: #ffffff;
+    padding: 15px;
+    text-align: left;
+    font-size: 18px;
+}
+
+
+div.header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+div.header a:hover {
+    text-decoration: none;
+}
+
+div:not(.header) {
+    background: none; 
+    color: #2c3e50;   
+    padding: 0;       
+    /* text-align: left;  */
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+
+.flashes {
+    background-color: #ffcccb;
+    border: 1px solid red;
+    padding: 10px;
+    margin: 10px auto;
+    width: 90%;
+    text-align: center;
+    color: #333;
+    font-weight: bold;
+}
+
+
+h1, h2 {
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background: #fff;
+    border: 1px solid #ddd;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+
+a[href="/logout"], a[href="/login"], a[href="/cadastro"], a[href="/post"] {
+    display: inline-block;
+    margin: 10px 5px;
+    padding: 10px 20px;
+    background-color: #ffa500;
+    color: white;
+    border-radius: 5px;
+}
+
+a[href="/logout"]:hover, 
+a[href="/login"]:hover, 
+a[href="/cadastro"]:hover, 
+a[href="/post"]:hover {
+    background-color: #ff8c00;
+}
+
+.profile-container {
+    text-align: center;
+}
+
+.profile-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.profile-image {
+    border-radius: 50%; 
+    margin-right: 20px; 
+    margin-left: 20px;
+    width: 100px; 
+    height: 100px;
+    object-fit: cover; 
+}
+
+.username {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.bio {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 16px;    
+}

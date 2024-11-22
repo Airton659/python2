@@ -36,9 +36,5 @@ def create_post(body,user):
     db.session.add(post)
     db.session.commit()
 
-def get_timeline(user_id=None):
-    query = Post.query
-    if user_id:
-        query = query.filter_by(user_id = user_id)
-    query = query.order_by(Post.timestamp.desc()).limit(5)
-    return query.all()
+def get_timeline():
+        return Post.query.order_by(Post.timestamp.desc()).limit(5).all()

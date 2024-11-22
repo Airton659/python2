@@ -10,10 +10,12 @@ from flask_login import (
     login_required
 )
 
+
+
 @app.route('/')
 def index():
     user = current_user if current_user.is_authenticated else None
-    posts = get_timeline(user.id) if user else []
+    posts = get_timeline() if user else []
     return render_template(
         'index.html',
         title='Página Inicial',
